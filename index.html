@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Random Image Generator</title>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico?">
@@ -9,15 +10,48 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 300px;
+            height: 600px;
+            /* Adjust the height as desired */
+            overflow: hidden;
+            /* Hide any image overflow */
+        }
+
+        #randomImage {
+            max-width: 100%;
+            max-height: 100%;
+            width: auto;
+            height: auto;
+        }
+
+        /* Dark Mode */
+        .dark-mode {
+            background-color: #121212;
+            color: #fff;
+        }
+
+        .dark-mode #randomImage {
+            border: 1px solid #fff;
+        }
+
+        .footer {
+            background-color: #fff;
+            padding: 16px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .dark-mode .footer {
+            background-color: #121212;
+            color: #fff;
         }
     </style>
+
     <script>
         var currentImageId = null;
 
         function generateImage() {
             fetch('https://picsum.photos/1920/1080')
-                .then(function(response) {
+                .then(function (response) {
                     var id = response.url.match(/id\/(\d+)/)[1];
                     currentImageId = id;
                     var imageUrl = 'https://picsum.photos/id/' + id + '/1920/1080';
@@ -34,10 +68,10 @@
             var imageUrl = 'https://picsum.photos/id/' + currentImageId + '/1920/1080';
 
             fetch(imageUrl)
-                .then(function(response) {
+                .then(function (response) {
                     return response.blob();
                 })
-                .then(function(blob) {
+                .then(function (blob) {
                     var url = URL.createObjectURL(blob);
 
                     var link = document.createElement('a');
@@ -48,18 +82,35 @@
                     URL.revokeObjectURL(url); // Clean up the temporary URL
                 });
         }
+
+        function toggleDarkMode() {
+            var body = document.body;
+            body.classList.toggle('dark-mode');
+        }
     </script>
 </head>
-<body class="bg-gray-100">
+
+<body class="">
     <div class="container mx-auto py-8">
         <h1 class="text-3xl font-bold text-center mb-6">Random Image Generator</h1>
         <div class="image-container">
             <img id="randomImage" src="https://picsum.photos/1920/1080" alt="Random Image" class="rounded-lg shadow-lg">
         </div>
         <div class="flex justify-center mt-6">
-            <button onclick="generateImage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mr-2">Generate New Image</button>
-            <button onclick="saveImage()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Save Image</button>
+            <button onclick="generateImage()"
+                class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mr-2">Generate New
+                Image</button>
+            <button onclick="saveImage()"
+                class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">Save Image</button>
+            <button onclick="toggleDarkMode()"
+                class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded ml-2">Toggle Dark
+                Mode</button>
         </div>
     </div>
+    <footer class="footer">
+        <p>&copy; 2023 <a href="https://github.com/27mfp" target="_blank">Miguel</a>. All rights reserved.</p>
+    </footer>
+    
 </body>
+
 </html>
