@@ -16,11 +16,11 @@
         var currentImageId = null;
 
         function generateImage() {
-            fetch('https://picsum.photos/256/256')
+            fetch('https://picsum.photos/1920/1080')
                 .then(function(response) {
                     var id = response.url.match(/id\/(\d+)/)[1];
                     currentImageId = id;
-                    var imageUrl = 'https://picsum.photos/id/' + id + '/256/256';
+                    var imageUrl = 'https://picsum.photos/id/' + id + '/1920/1080';
                     var image = document.getElementById('randomImage');
                     image.src = imageUrl;
                 });
@@ -31,7 +31,7 @@
                 return; // No image generated yet
             }
 
-            var imageUrl = 'https://picsum.photos/id/' + currentImageId + '/256/256';
+            var imageUrl = 'https://picsum.photos/id/' + currentImageId + '/1920/1080';
 
             fetch(imageUrl)
                 .then(function(response) {
@@ -42,7 +42,7 @@
 
                     var link = document.createElement('a');
                     link.href = url;
-                    link.download = 'random_image.jpg';
+                    link.download = 'image.jpg';
                     link.click();
 
                     URL.revokeObjectURL(url); // Clean up the temporary URL
@@ -54,7 +54,7 @@
     <div class="container mx-auto py-8">
         <h1 class="text-3xl font-bold text-center mb-6">Random Image Generator</h1>
         <div class="image-container">
-            <img id="randomImage" src="https://picsum.photos/256/256" alt="Random Image" class="rounded-lg shadow-lg">
+            <img id="randomImage" src="https://picsum.photos/1920/1080" alt="Random Image" class="rounded-lg shadow-lg">
         </div>
         <div class="flex justify-center mt-6">
             <button onclick="generateImage()" class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded mr-2">Generate New Image</button>
